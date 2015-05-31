@@ -1,0 +1,59 @@
+{
+  "name": "todo",
+  "version": "0.0.18",
+  "scripts": {
+    "development": "touch -t 197804100000.00 system/main.js && nodemon --debug -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
+    "developmentforever": "touch -t 197804100000.00 system/main.js && nodemon --exitcrash -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
+    "production": "touch -t 197804100000.00 system/main.js && node app.js"
+  },
+  "dependencies": {
+    "async": "^1.0.0",
+    "bcrypt": "^0.8.1",
+    "body-parser": "^1.10.2",
+    "browserify": "^8.1.0",
+    "browserify-transform-tools": "^1.3.0",
+    "express": "~4.10.6",
+    "express-session": "^1.10.2",
+    "flat-file-db": "^0.1.3",
+    "fs-extra": "^0.14.0",
+    "grunt": "*",
+    "js-beautify": "^1.5.4",
+    "lodash": ">=2.4.1",
+    "marked": "^0.3.3",
+    "minifyify": "^6.1.1",
+    "minimist": "^1.1.0",
+    "mithril": "*",
+    "mithril-node-render": "0.2.2",
+    "mithril.bindings": "0.0.3",
+    "mithril.sugartags": "0.0.5",
+    "node-uuid": "^1.4.2",
+    "nodemon": "^1.3.5",
+    "npm": "~2.1.16",
+    "promiz": "^1.0.3",
+    "request": "^2.53.0",
+    "sockjs": "0.3.12",
+    "sqlite3": "^3.0.5",
+    "validator": "^3.27.0",
+    "validator.modelbinder": "0.0.2"
+  },
+  "description": "todo - an awesome project based on miso",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "~2.0.1"
+  },
+  "keywords": [
+    "mithril",
+    "isomorphic",
+    "framework",
+    "mvc",
+    "useful",
+    "jsguy"
+  ],
+  "license": "MIT",
+  "browser": {
+    "./system/api.server.js": "./system/api.client.js"
+  }
+}

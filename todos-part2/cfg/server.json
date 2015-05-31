@@ -1,0 +1,21 @@
+{
+	"port": 3001,
+	"session": {
+		"secret": "session-cookie-signing-secret"
+	},
+	"authentication": {
+		"enabled": false,
+		"all": false,
+		"secret": "im-so-miso",
+		"loginUrlPattern": "/login?url=[ORIGINALURL]",
+		"middleware": "../system/auth_middle"
+	},
+	"routeMiddleware": ["../system/default_middle"],
+	"layout": "../mvc/layout_miso.js",
+	"apiPath": "/api",
+	"COMMENT_api": "mongoose",
+	"api": ["flatfiledb", "session", "authentication"],
+	"minify": true,
+	"sourceMap": true,
+	"pretty": false
+}

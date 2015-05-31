@@ -1,0 +1,11 @@
+{
+	"ignore": [
+		"system/api/*/api.client.js",
+		"system/api/*/api.server.js",
+		"modules/api/*/api.client.js",
+		"modules/api/*/api.server.js",
+		"system/main.js",
+		"client/miso.js",
+		"client/miso.documentation.js"
+	]
+}

@@ -1,0 +1,65 @@
+{
+  "name": "todos-part1",
+  "version": "0.0.20",
+  "scripts": {
+    "development": "touch -t 197804100000.00 system/main.js && nodemon --debug -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
+    "developmentforever": "touch -t 197804100000.00 system/main.js && nodemon --exitcrash -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
+    "production": "touch -t 197804100000.00 system/main.js && node app.js"
+  },
+  "dependencies": {
+    "async": "^1.0.0",
+    "bcrypt": "^0.8.1",
+    "body-parser": "^1.10.2",
+    "browserify": "^8.1.0",
+    "browserify-transform-tools": "^1.3.0",
+    "express": "~4.10.6",
+    "express-session": "^1.10.2",
+    "flat-file-db": "^0.1.3",
+    "fs-extra": "^0.14.0",
+    "grunt": "*",
+    "js-beautify": "^1.5.4",
+    "lodash": ">=2.4.1",
+    "marked": "^0.3.3",
+    "minifyify": "^6.1.1",
+    "minimist": "^1.1.0",
+    "mithril": "*",
+    "mithril-node-render": "0.2.2",
+    "mithril.bindings": "0.0.3",
+    "mithril.sugartags": "0.0.5",
+    "node-uuid": "^1.4.2",
+    "nodemon": "^1.3.5",
+    "npm": "~2.1.16",
+    "promiz": "^1.0.3",
+    "request": "^2.53.0",
+    "sockjs": "0.3.12",
+    "sqlite3": "^3.0.5",
+    "validator": "^3.27.0",
+    "validator.modelbinder": "0.0.2"
+  },
+  "description": "todos-part1 - an awesome project based on miso",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "~2.0.1"
+  },
+  "keywords": [
+    "mithril",
+    "isomorphic",
+    "framework",
+    "mvc",
+    "useful",
+    "jsguy"
+  ],
+  "license": "MIT",
+  "browser": {
+    "./system/api.server.js": "./system/api.client.js"
+  },
+  "readme": "misojs\n======\n\nmisojs: MIthril iSOmorphic JavaScript framework\n\n## Install\n\nPrerequisites: [npm and node](http://nodejs.org/)\n\n```javascript\nnpm install misojs -g\n```\n\nThen to create and run a project:\n\n```javascript\nmiso -n myApp -s todo\ncd myApp\nmiso run\n```\n\nThis creates a new project with the 'todo' skeleton applied, and runs it on http://localhost:6476\n\nPS: 6476 = miso if you typed it on a keypad!\n\nDocumentation is in [the wiki](../../wiki)\n\n## miso development install\n\nUse one of these methods, if you want to work on improving miso the framework, instead of creating a miso app.\n\n### archive download method\n\n* Download this [zip file](https://github.com/jsguy/misojs/archive/master.zip) and expand in a directory somewhere.\n* `npm install`\n* `chmod +x bin/miso.bin.js`\n* `bin/miso.bin.js run`\n* Open http://localhost:6476 within your browser\n\n### clone repository method\n\n* Clone this repository to a directory somewhere `git clone https://github.com/jsguy/misojs.git`\n* `cd misojs`\n* `npm install`\n* `chmod +x bin/miso.bin.js`\n* `bin/miso.bin.js run`\n* Open http://localhost:6476 within your browser\n\n## IE8 support\n\nMithril needs a bunch of polyfills - grab [from here](https://gist.github.com/jsguy/edc7e51ae56e0ab37a5c) if you need to support IE8, and conditionally include it.\n\n## Changelog\n\nBe sure to read [changelog.md](https://github.com/jsguy/misojs/blob/master/changelog.md) for the latest changes and update you might need to be aware of.",
+  "readmeFilename": "README.md",
+  "gitHead": "d3732ff2b651dafb889c781a44ceedc939f85125",
+  "_id": "misojs@0.0.20",
+  "_shasum": "b83c8a83db9a847cf25ecf52b3e52ba4cf7a36b3",
+  "_from": "misojs@*"
+}
