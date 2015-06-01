@@ -11,20 +11,82 @@ var self = module.exports.index = {
         }
     },
 	controller: function() {
-	    var myTodos = [{text: "Learn miso"}, {text: "Build miso app"}];
-	    this.list = Object.keys(myTodos).map(function(key) {
-	        return new self.models.todo(myTodos[key]);
-	    });
-	    return this;
+		var ctrl = this,
+			modelType = 'home.index.todo';
+
+		ctrl.list = [];
+
+		db.find({type: modelType}, {background: true, initialValue: []}).then(function(data) {
+			ctrl.list = Object.keys(data.result).map(function(key) {
+				return new self.models.todo(data.result[key]);
+			});
+		});
+
+		ctrl.addTodo = function(e){
+			var value = ctrl.vm.input();
+			if(value) {
+				var newTodo = new self.models.todo({
+					text: ctrl.vm.input(),
+					done: false
+				});
+				ctrl.list.push(newTodo);
+				ctrl.vm.input("");
+				db.save({ type: modelType, model: newTodo } ).then(function(res){
+					newTodo._id = res.result;
+				});
+			}
+			e.preventDefault();
+			return false;
+		};
+
+		ctrl.archive = function(){
+			var list = [];
+			ctrl.list.map(function(todo) {
+				if(!todo.done()) {
+					list.push(todo); 
+				} else {
+					db.remove({ type: modelType, _id: todo._id }).then(function(response){
+						console.log(response.result);
+					});
+				}
+			});
+			ctrl.list = list;
+		};
+
+		ctrl.vm = {
+			left: function(){
+				var count = 0;
+				ctrl.list.map(function(todo) {
+					count += todo.done() ? 0 : 1;
+				});
+				return count;
+			},
+			toggle: function(todo){
+				return function() {
+					todo.done(!todo.done());
+				}
+			},
+			input: m.prop("")
+		};
+
+		return ctrl;
 	},
 	view: function(ctrl) {
-	    return m("div.cw", [
-	        m("H1", "Todos"),
-	        m("UL", [
-	            ctrl.list.map(function(todo){
-	                return m("LI", todo.text)
-	            })
-	        ])
-	    ]);
+		with(sugartags) {
+			return DIV({"class": "cw cf"}, [
+				STYLE(".done{text-decoration: line-through;}"),
+				H1("Todos - " + ctrl.vm.left() + " of " + ctrl.list.length + " remaining"),
+				BUTTON({ onclick: ctrl.archive }, "Archive"),
+				UL([
+					ctrl.list.map(function(todo){
+						return LI({ class: todo.done()? "done": "", onclick: ctrl.vm.toggle(todo) }, todo.text);
+					})
+				]),
+				FORM({ onsubmit: ctrl.addTodo }, [
+					INPUT({ type: "text", value: ctrl.vm.input, placeholder: "Add todo"}),
+					BUTTON({ type: "submit"}, "Add")
+				])
+			]);
+		}
 	}
 };
