@@ -13,9 +13,7 @@ module.exports.view = function(ctrl){
 			HTML([
 				HEAD([
 					TITLE("Todos"),
-					LINK({href: '/css/style.css', rel:'stylesheet'}),
-					//	Add in the misoGlobal object...
-					SCRIPT("var misoGlobal = "+(ctrl.misoGlobal? JSON.stringify(ctrl.misoGlobal): {})+";")
+					LINK({href: '/css/style.css', rel:'stylesheet'})
 				]),
 				BODY([
 					SECTION({id: ctrl.misoAttachmentNode}, ctrl.content),

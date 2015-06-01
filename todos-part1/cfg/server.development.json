@@ -1,5 +1,5 @@
 {
-	"port": 6476,
+	"port": 6477,
 	"minify": false,
 	"sourceMap": true,
 	"pretty": true,
