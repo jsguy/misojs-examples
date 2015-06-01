@@ -6,7 +6,6 @@ var self = module.exports.index = {
         todo: function(data){
             this.text = data.text;
             this.done = m.prop(data.done == "false"? false: data.done);
-            this._id = data._id;
         }
     },
 	controller: function() {
