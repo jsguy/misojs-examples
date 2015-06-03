@@ -1,6 +1,6 @@
 {
 	"port": 6478,
-	"minify": false,
+	"minify": true,
 	"sourceMap": true,
 	"pretty": true,
 	"reload": true,

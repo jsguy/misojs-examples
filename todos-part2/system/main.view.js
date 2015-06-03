@@ -16,6 +16,8 @@ module.exports.index = function(ctrl){
 		return [
 			"/* NOTE: This is a generated file, please do not modify it, your changes will be lost */",
 			"var m = require('mithril');",
+
+			"var misoGlobal = misoGlobal || {};",
 			
 			//	Required libs
 			"var sugartags = require('mithril.sugartags')(m);",
