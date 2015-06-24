@@ -75,11 +75,11 @@ var fs			= require('fs'),
 		layout = layout || defaultLayout;
 
 		//	If we have header content
-		if(layout.headerContent){
-			obj.headerContent = layout.headerContent;
-		}
+		obj.headerContent = layout.headerContent?
+			layout.headerContent:
+			function(){return "";};
 
-		//	HERE: Add misoGlobal.authEnable
+		//	Add misoGlobal.authEnable
 		obj.misoGlobal = {
 			authenticationEnabled: serverConfig.authentication.enabled
 		};
@@ -99,6 +99,7 @@ var fs			= require('fs'),
 	//	Apply any route middleware
 	middlewareList,
 	applyMiddleware = function(args){
+		//	Check for authentiction middleware
 		if(!middlewareList) {
 			if(serverConfig.authentication && serverConfig.authentication.enabled && serverConfig.authentication.middleware) {
 				middlewareList = [require(serverConfig.authentication.middleware)];
@@ -337,14 +338,6 @@ module.exports = function(app, options) {
 						mvc = args.route[args.action],
 						applySkin = function(res, mvc, session, scope){
 							var myLayout = defaultLayout;
-
-							if(mvc.config && mvc.config.layout) {
-								//myLayout = mvc.config.layout;
-
-								console.log('my', myLayout);
-								console.log('e', mvc.config.layout);
-							}
-
 							res.end(skin(
 								_.isFunction(mvc.view)? 
 									mvc.view(scope): 
@@ -438,7 +431,8 @@ module.exports = function(app, options) {
 	fs.writeFileSync(mainFile, render(mainView({
 		routes: routeList,
 		permissions: JSON.stringify(permissions),
-		attachmentNodeSelector: attachmentNodeSelector
+		attachmentNodeSelector: attachmentNodeSelector,
+		serverConfig: serverConfig
 	}), true));
 
 	//	Run browserify when either a controller or view has changed.

@@ -24,13 +24,15 @@ module.exports.index = function(ctrl){
 			"var permissions = require('../system/miso.permissions.js');",
 			
 			//	Grab the header so we can re-render
-			"var layout = require('../mvc/layout.js');",
+			"var layout = require('"+ctrl.serverConfig.layout+"');",
 
 			//	Setup a restrict method
 			//	TODO: Need user roles here, then copy index.js
 			//	functionality.
 			"var restrict = function(route, actionName){",
 
+			//	Only include this if authentication is enabled
+			//	TODO: Move this out and make configurable
 			(GLOBAL.serverConfig.authentication.enabled? [
 
 				//	If authentication is turned on, we can use permissions
@@ -46,6 +48,8 @@ module.exports.index = function(ctrl){
 				"		route.controller = function() {",
 				//	We trust the isLoggedIn attribute - the server
 				//	will guard against non-logged in data.
+
+
 				"			var isLoggedIn = misoGlobal.isLoggedIn;",
 
 							//	Hardcoded login path for now
@@ -77,11 +81,14 @@ module.exports.index = function(ctrl){
 
 			"	return route;",
 
-			"};",
+			"},",
 
 //			"var permissionObj = (" + ctrl.permissions + ");",
 			//"var permissionObj = (" + (ctrl.permissions? JSON.stringify(ctrl.restrictions): "{}") + ");",
-			"var permissionObj = {};",
+			"permissionObj = {};",
+
+			//	Ensure we always have misoGlobal
+			//"var misoGlobal = misoGlobal || {};",
 
 			//	All our route files
 			(ctrl.routes.map(function(route, idx) {
@@ -111,8 +118,12 @@ module.exports.index = function(ctrl){
 
 			//	Global function to render the header
 			"misoGlobal.renderHeader = function(obj){",
-			"	m.render(document.getElementById('misoHeaderNode'), layout.headerContent({misoGlobal: obj || misoGlobal}));",
+			"	var headerNode = document.getElementById('misoHeaderNode');",
+			"	if(headerNode){",
+			"		m.render(document.getElementById('misoHeaderNode'), layout.headerContent? layout.headerContent({misoGlobal: obj || misoGlobal}): '');",
+			"	}",
 			"};",
+
 			"misoGlobal.renderHeader();"
 		];
 	};

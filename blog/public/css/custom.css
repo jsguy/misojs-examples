@@ -1,0 +1,72 @@
+/* Various custom style overrides */
+pre[class*="language-"] { border-radius: 2px; }
+pre.syntaxifyCode { margin-left: 0; }
+pre.syntaxifyCode code { padding: 1em; border-radius: 0.5em;}
+.reveal pre code { background: #333; }
+.reveal h3 { text-align: left; padding-top: 0.3em; clear: both; }
+p { text-align: left }
+p.textCenter { text-align: center }
+
+.compareJS .compareLeft,
+.compareJS .compareRight { width: 48%; float: left;}
+.compareJS .compareLeft code { border: 4px solid red; }
+.compareJS .compareRight code { border: 4px solid #3d3; }
+
+.textRight { text-align: right }
+.speakerName { font-style: italic !important; font-size: 1.6em !important }
+.spec { font-style: italic !important }
+ul,ol,dl { display: block !important; margin: 1em 2em !important;}
+.sizeFont { font-weight: bold; font-size: 1.3em }
+.big { font-size: 1.5em !important; font-style: italic !important; color: #99c; }
+
+.reveal section img {background: none; border: 0; box-shadow: none; margin: 0; }
+
+table.fwCompare td        { padding: 0.2em 0.4em; background: #666}
+table td.no     {  }
+table td.yes    { background: #090; color: #fff; }
+
+.clear { clear: both; }
+
+/* Diagrams */
+div.diagram { background: #fff; border-radius: 2px; padding: 1em 0 }
+
+/* Fun with spinning logo */
+#logoContainer {perspective: 600px; position: absolute; top: 50%; Xtransform: translateY(-5%); }
+#logo {
+    max-height: 100%;
+    max-width: 100%;
+    width: 50%;
+    -webkit-animation-name: spinner;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 45s;
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 45s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-filter: blur(100px);
+    opacity: 0; 
+    transition: all 5s; 
+}
+
+.present #logo { -webkit-filter: none; opacity: 0.25; }
+
+@-webkit-keyframes spinner { 
+    from {-webkit-transform: rotateY(0deg); }
+    to {-webkit-transform: rotateY(-360deg); }
+}
+
+@keyframes spinner { 
+    from {-moz-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg); }
+    to {-moz-transform: rotateY(-360deg); -ms-transform: rotateY(-360deg); transform: rotateY(-360deg); }
+}
+
+
+/* Fun with speaker name */
+.speakerName {-webkit-filter: blur(100px); opacity: 0; transition: all 2s }
+.present .speakerName { -webkit-filter: none; opacity: 1; color: #22a7df;}
+

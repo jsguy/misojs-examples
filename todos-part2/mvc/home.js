@@ -75,7 +75,7 @@ var self = module.exports.index = {
 		with(sugartags) {
 			return DIV({"class": "cw cf"}, [
 				STYLE(".done{text-decoration: line-through;}"),
-				H1("Todos - " + ctrl.vm.left() + " of " + ctrl.list.length + " remaining"),
+				H1("Okaish Todos - " + ctrl.vm.left() + " of " + ctrl.list.length + " remaining"),
 				BUTTON({ onclick: ctrl.archive }, "Archive"),
 				UL([
 					ctrl.list.map(function(todo){

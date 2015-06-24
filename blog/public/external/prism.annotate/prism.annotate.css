@@ -1,0 +1,37 @@
+.annotate-tooltip {
+    position:absolute;
+    border:1px solid #333;
+    background-color:#fff;
+    border-radius:5px;
+    padding:10px;
+    color:#161616;
+    font-size: 2em;
+    font-family: sans-serif;
+    z-index: 100000;
+    max-width: 36em;
+}
+
+div.line-annotate {  
+    margin-left: 16px;
+    transition: all 0.5s;
+    border-left: #2ae 4px solid;
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: inherit 0;
+    margin-top: 0.85em;
+    background: hsla(24,20%,50%,.08);
+    background: -moz-linear-gradient(left,hsla(24,20%,50%,.1)70%,hsla(24,20%,50%,0));
+    background: -webkit-linear-gradient(left,hsla(24,20%,50%,.1)70%,hsla(24,20%,50%,0));
+    background: -o-linear-gradient(left,hsla(24,20%,50%,.1)70%,hsla(24,20%,50%,0));
+    background: linear-gradient(left,hsla(24,20%,50%,.1)70%,hsla(24,20%,50%,0));
+    line-height: inherit;
+    white-space: pre;
+
+ }
+
+ div.line-annotate:hover {
+    margin-left: 0;
+    border-left-width: 20px;
+    background: hsla(24,20%,50%,.18);
+ } 
