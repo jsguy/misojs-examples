@@ -6,8 +6,6 @@
 
 	Note: for client funcitonality we assume that both jQuery and 
 	Select2 are included in the page, so you must manually do that.
-
-	Note2: The config is never run server side - it doesn't need to.
 */
 var m = require('mithril');
 var Select2 = {
@@ -36,6 +34,7 @@ var Select2 = {
 	@param {function(Object id)} onchange - the event handler to call when the selection changes.
 		`id` is the the same as `value`
 	*/
+	//	Note: The config is never run server side.
 	config: function(ctrl) {
 		return function(element, isInitialized) {
 			if(typeof jQuery !== 'undefined' && typeof jQuery.fn.select2 !== 'undefined') {
@@ -43,7 +42,15 @@ var Select2 = {
 				if (!isInitialized) {
 					el.select2()
 						.on("change", function(e) {
+							var id = el.select2("val");
 							m.startComputation();
+
+							ctrl.data.map(function(d){
+								if(d.id == id) {
+									ctrl.value(d);
+								}
+							});
+
 							if (typeof ctrl.onchange == "function"){
 								ctrl.onchange(el.select2("val"));
 							}

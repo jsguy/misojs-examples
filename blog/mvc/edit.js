@@ -1,6 +1,7 @@
 var m = require('mithril'),
 	sugartags = require('mithril.sugartags')(m),
-	Select2 = require('../modules/components/select2/select2.module.js');
+	Select2 = require('../modules/components/select2/select2.component.js'),
+	CodeMirror = require('../modules/components/codemirror/codemirror.component.js');
 
 module.exports.index = {
 	models: {
@@ -19,6 +20,8 @@ module.exports.index = {
 			{title: "The 2nd post", body: "Yes, this is the second post."}
 		];
 
+		
+
 		//list of users to show
 		me.data = [
 			{id: 1, name: "John"},
@@ -26,14 +29,7 @@ module.exports.index = {
 			{id: 3, name: "Senequia"}
 		];
 		me.currentUser = m.prop(me.data[1]);
-		me.changeUser = function(id) {
-			console.log('changed', id);
-			me.data.map(function(d){
-				if(d.id == id) {
-					me.currentUser(d);
-				}
-			});
-		};
+		me.codeMirrorValue = m.prop("for(var x = 0; x < 10; x += 1){\n    console.log(x);\n}");
 
 		return me;
 	},
@@ -46,8 +42,14 @@ module.exports.index = {
 					LABEL("User:"),
 					m.component(Select2, {
 						data: ctrl.data, 
-						value: ctrl.currentUser, 
-						onchange: ctrl.changeUser
+						value: ctrl.currentUser
+					})
+				]),
+
+				DIV([
+					LABEL("Code mirror:"),
+					m.component(CodeMirror, {
+						value: ctrl.codeMirrorValue
 					})
 				]),
 
