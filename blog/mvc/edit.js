@@ -2,6 +2,7 @@ var m = require('mithril'),
 	sugartags = require('mithril.sugartags')(m),
 	Select2 = require('../modules/components/select2/select2.component.js'),
 	CodeMirror = require('../modules/components/codemirror/codemirror.component.js');
+	Syntaxify = require('../modules/components/syntaxify/syntaxify.component.js');
 
 module.exports.index = {
 	models: {
@@ -53,6 +54,14 @@ module.exports.index = {
 					})
 				]),
 
+				DIV([
+					LABEL("Syntaxify:"),
+					m.component(Syntaxify, {
+						value: ctrl.codeMirrorValue,
+						language: "javascript"
+					})
+				]),
+
 				ctrl.posts.map(function(post){
 					return DIV({"class": "post"}, [
 						H2(post.title),
@@ -68,7 +77,9 @@ module.exports.index = {
 				//	Add in other bits
 				//	TODO: Perhaps add to main lib, or use CDN versions
 				SCRIPT({src: "/js/jquery-1.11.2.min.js"}),
+				SCRIPT({src: "/external/syntaxify/prism.min.js"}),
 				SCRIPT({src: "/external/syntaxify/jquery.syntaxify.js"}),
+				LINK({rel: "stylesheet", href:"/external/syntaxify/prism.min.css"}),
 
 				SCRIPT({src: "/external/select2/select2.min.js"}),
 				LINK({rel: "stylesheet", href:"/external/select2/select2.min.css"})
