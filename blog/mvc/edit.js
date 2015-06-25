@@ -1,6 +1,6 @@
 var m = require('mithril'),
 	sugartags = require('mithril.sugartags')(m),
-	Select2 = require('../public/binders/select2.module.js');
+	Select2 = require('../modules/components/select2/select2.module.js');
 
 module.exports.index = {
 	models: {
