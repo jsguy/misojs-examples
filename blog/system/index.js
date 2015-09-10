@@ -360,8 +360,15 @@ module.exports = function(app, options) {
 						applySkin(res, mvc, session, scope);
 					}
 				} catch(ex){
-					var problem = args.action + " - " + args.path + " threw: " + ex;
-					console.log(ex, problem);
+					//	TODO: Maybe useful for the stacktrace - http://stackoverflow.com/questions/13227489/how-can-one-get-the-file-path-of-the-caller-function-in-node-js
+					var problem = args.file + " - " + args.method.toUpperCase() + " " + args.path + "/" + args.action + " threw " + ex;
+
+					if (typeof ex === 'object' && ex.stack) {
+						problem += "\n--- stacktrace ---";
+						problem += "\n" + ex.stack;
+					}
+
+					options.verbose && console.log(problem);
 					next(problem);
 				}
 			};

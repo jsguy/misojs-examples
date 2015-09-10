@@ -1,10 +1,14 @@
 {
-  "name": "todo",
-  "version": "0.0.18",
+  "name": "misojs",
+  "version": "0.0.21",
+  "private": false,
   "scripts": {
-    "development": "touch -t 197804100000.00 system/main.js && nodemon -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
+    "development": "touch -t 197804100000.00 system/main.js && nodemon --debug -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
     "developmentforever": "touch -t 197804100000.00 system/main.js && nodemon --exitcrash -e js,css,json --watch package.json --watch modules/ --watch system/ --watch cfg/ --watch mvc/ --watch client/ --watch server/ --watch app.js app.js",
     "production": "touch -t 197804100000.00 system/main.js && node app.js"
+  },
+  "bin": {
+    "miso": "bin/miso.bin.js"
   },
   "dependencies": {
     "async": "^1.0.0",
@@ -36,13 +40,17 @@
     "validator": "^3.27.0",
     "validator.modelbinder": "0.0.2"
   },
-  "description": "todo - an awesome project based on miso",
+  "description": "MISOJS (Mithril ISOmorphic JavaScript) is a node.js and mithril based MVC implementation that provides an isomorphic environment to create apps quickly.",
   "main": "app.js",
   "directories": {
     "test": "test"
   },
   "devDependencies": {
     "mocha": "~2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsguy/misojs.git"
   },
   "keywords": [
     "mithril",
@@ -52,8 +60,18 @@
     "useful",
     "jsguy"
   ],
+  "author": "Mikkel Bergmann",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsguy/misojs/issues"
+  },
   "browser": {
     "./system/api.server.js": "./system/api.client.js"
+  },
+  "homepage": "https://github.com/jsguy/misojs",
+  "miso": {
+    "dependencies": {
+      "misojs-sequencediagrams-component": "0.0.1"
+    }
   }
 }

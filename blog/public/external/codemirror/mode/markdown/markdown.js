@@ -202,7 +202,8 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
 
   function htmlBlock(stream, state) {
     var style = htmlMode.token(stream, state.htmlState);
-    if ((htmlFound && state.htmlState.tagStart === null && !state.htmlState.context) ||
+    if ((htmlFound && state.htmlState.tagStart === null &&
+         (!state.htmlState.context && state.htmlState.tokenize.isInText)) ||
         (state.md_inside && stream.current().indexOf(">") > -1)) {
       state.f = inlineNormal;
       state.block = blockNormal;
@@ -273,17 +274,16 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
     }
 
     if (state.linkHref) {
-      styles.push(linkhref);
-      return styles.length ? styles.join(' ') : null;
+      styles.push(linkhref, "url");
+    } else { // Only apply inline styles to non-url text
+      if (state.strong) { styles.push(strong); }
+      if (state.em) { styles.push(em); }
+      if (state.strikethrough) { styles.push(strikethrough); }
+
+      if (state.linkText) { styles.push(linktext); }
+
+      if (state.code) { styles.push(code); }
     }
-
-    if (state.strong) { styles.push(strong); }
-    if (state.em) { styles.push(em); }
-    if (state.strikethrough) { styles.push(strikethrough); }
-
-    if (state.linkText) { styles.push(linktext); }
-
-    if (state.code) { styles.push(code); }
 
     if (state.header) { styles.push(header); styles.push(header + "-" + state.header); }
 
@@ -447,12 +447,11 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       return type + linkemail;
     }
 
-    if (ch === '<' && stream.match(/^\w/, false)) {
-      if (stream.string.indexOf(">") != -1) {
-        var atts = stream.string.substring(1,stream.string.indexOf(">"));
-        if (/markdown\s*=\s*('|"){0,1}1('|"){0,1}/.test(atts)) {
-          state.md_inside = true;
-        }
+    if (ch === '<' && stream.match(/^(!--|\w)/, false)) {
+      var end = stream.string.indexOf(">", stream.pos);
+      if (end != -1) {
+        var atts = stream.string.substring(stream.start, end);
+        if (/markdown\s*=\s*('|"){0,1}1('|"){0,1}/.test(atts)) state.md_inside = true;
       }
       stream.backUp(1);
       state.htmlState = CodeMirror.startState(htmlMode);
@@ -637,7 +636,7 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
       stream.match(/^(?:\s+(?:"(?:[^"\\]|\\\\|\\.)+"|'(?:[^'\\]|\\\\|\\.)+'|\((?:[^)\\]|\\\\|\\.)+\)))?/, true);
     }
     state.f = state.inline = inlineNormal;
-    return linkhref;
+    return linkhref + " url";
   }
 
   var savedInlineRE = [];

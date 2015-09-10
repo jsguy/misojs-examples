@@ -1,9 +1,13 @@
 var m = require('mithril'),
-	sugartags = require('mithril.sugartags')(m),
-	Select2 = require('../modules/components/select2/select2.component.js'),
-	CodeMirror = require('../modules/components/codemirror/codemirror.component.js');
-	Syntaxify = require('../modules/components/syntaxify/syntaxify.component.js');
-	SequenceDiagram = require('../modules/components/sequencediagram/sequencediagram.component.js');
+	sugartags = require('mithril.sugartags')(m);
+
+var Markdown = require('misojs-markdown-component')({});
+var CodeMirror = require('misojs-codemirror-component')();
+var SequenceDiagrams = require('misojs-sequencediagrams-component')({});
+
+
+var Syntaxify = require('../../../misojs-syntaxify-component/syntaxify.component.js')({});
+
 
 module.exports.index = {
 	models: {
@@ -21,8 +25,6 @@ module.exports.index = {
 			{title: "Hello world", body: "Well, here we are."},
 			{title: "The 2nd post", body: "Yes, this is the second post."}
 		];
-
-		
 
 		//list of users to show
 		me.data = [
@@ -43,6 +45,39 @@ module.exports.index = {
 			"Miso API->MVC entity: Response"].join("\n")
 		);
 
+		me.markdownValue = [
+			"## Markdown",
+			"The mark-up that likes to get down!",
+			"* That",
+			"* Is",
+			"",
+			"Definitely",
+			"",
+			"1. **Rather**",
+			"2. Awesome"].join("\n");
+
+		me.markdownValue2 = [
+			"## Markdown2",
+			"The mark-up that likes to get down!",
+			"* That",
+			"* Is",
+			"",
+			"Definitely",
+			"",
+			"1. **Rather**",
+			"2. Awesome"].join("\n");
+
+		me.markdownValue3 = [
+			"## Markdown3",
+			"The mark-up that likes to get down!",
+			"* That",
+			"* Is",
+			"",
+			"Definitely",
+			"",
+			"1. **Rather**",
+			"2. Awesome"].join("\n");
+
 		return me;
 	},
 	view: function(ctrl) {
@@ -50,13 +85,13 @@ module.exports.index = {
 			return DIV({"class": "cw cf"}, [
 				H1("Welcome to the blog!"),
 
-				DIV([
-					LABEL("User:"),
-					m.component(Select2, {
-						data: ctrl.data, 
-						value: ctrl.currentUser
-					})
-				]),
+				// DIV([
+				// 	LABEL("User:"),
+				// 	m.component(Select2, {
+				// 		data: ctrl.data, 
+				// 		value: ctrl.currentUser
+				// 	})
+				// ]),
 
 				DIV([
 					LABEL("Code mirror:"),
@@ -65,24 +100,42 @@ module.exports.index = {
 					})
 				]),
 
-				DIV([
-					LABEL("Syntaxify:"),
-					m.component(Syntaxify, {
-						value: ctrl.codeMirrorValue,
-						language: "javascript"
-					})
-				]),
+				// DIV([
+				// 	LABEL("Syntaxify:"),
+				// 	m.component(Syntaxify, {
+				// 		value: ctrl.codeMirrorValue,
+				// 		language: "javascript"
+				// 	})
+				// ]),
 
 
 
 				DIV([
 					LABEL("Sequence diagram:"),
-					m.component(SequenceDiagram, {
+					m.component(SequenceDiagrams, {
 						value: ctrl.sequenceDiagramValue,
 						language: "javascript"
 					})
 				]),
 
+
+				DIV([
+					LABEL("Markdown render:"),
+					m.component(Markdown, {
+						value: ctrl.markdownValue
+					})
+				]),
+
+				m.component(Markdown, {
+					value: ctrl.markdownValue2
+				}),
+
+				DIV([
+					LABEL("Markdown 3 render:"),
+					m.component(Markdown, {
+						value: ctrl.markdownValue3
+					})
+				]),
 
 				ctrl.posts.map(function(post){
 					return DIV({"class": "post"}, [
@@ -91,44 +144,6 @@ module.exports.index = {
 						HR()
 					]);
 				}),
-
-				//	We only need these in edit mode for now
-				//	Might want to move the syntax and sequnce diagrams to the layout.
-				//	TODO: Perhaps add to main lib, or use CDN versions
-				SCRIPT({src: "/js/jquery-1.11.2.min.js"}),
-
-				//	Code mirror
-				SCRIPT({src: "external/codemirror/lib/codemirror.js"}),
-				LINK({rel: "stylesheet", href:"external/codemirror/lib/codemirror.css"}),
-				SCRIPT({src: "external/codemirror/mode/javascript/javascript.js"}),
-
-				//	Syntaxify
-				SCRIPT({src: "/external/syntaxify/prism.min.js"}),
-				SCRIPT({src: "/external/syntaxify/jquery.syntaxify.js"}),
-				LINK({rel: "stylesheet", href:"/external/syntaxify/prism.min.css"}),
-
-				//	Select 2
-				SCRIPT({src: "/external/select2/select2.min.js"}),
-				LINK({rel: "stylesheet", href:"/external/select2/select2.min.css"}),
-
-
-
-
-/*
-	<!-- Web sequence diagrams -->
-	<script src="resource/js-sequence-diagrams/bower_components/raphael/raphael-min.js"></script>
-	<script src="resource/js-sequence-diagrams/bower_components/underscore/underscore-min.js"></script>
-	<script src="resource/js-sequence-diagrams/build/sequence-diagram-min.js"></script>
-*/
-
-				//	Sequence diagrams
-
-				SCRIPT({src: "/external/js-sequence-diagrams/bower_components/raphael/raphael-min.js"}),
-				SCRIPT({src: "/external/js-sequence-diagrams/bower_components/underscore/underscore-min.js"}),
-				SCRIPT({src: "/external/js-sequence-diagrams/build/sequence-diagram-min.js"})
-
-
-
 
 			]);
 		};
